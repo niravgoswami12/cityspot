@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/poi_detail_map"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardBackgroundColor="@color/global_bg_front"
+	app:cardCornerRadius="@dimen/card_corner_radius"
+	app:cardElevation="@dimen/global_elevation_2">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/global_spacing_16"
+			android:paddingStart="@dimen/global_spacing_16"
+			android:paddingEnd="@dimen/global_spacing_16"
+			android:textAppearance="@style/TextAppearance.CitySpot.Headline"
+			android:fontFamily="sans-serif-light"
+			android:text="@string/poi_detail_map_title" />
+
+		<org.alfonz.view.SelectorLinearLayout
+			android:id="@+id/poi_detail_map_image_wrap"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="@dimen/global_spacing_16"
+			android:layout_marginStart="@dimen/global_spacing_16"
+			android:layout_marginEnd="@dimen/global_spacing_16"
+			android:listSelector="@drawable/selector_clickable_item_bg"
+			android:clickable="true"
+			android:focusable="true">
+
+			<ImageView
+				android:id="@+id/poi_detail_map_image"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:adjustViewBounds="true"
+				android:scaleType="fitCenter"
+				android:contentDescription="@string/poi_detail_map_image_description" />
+
+		</org.alfonz.view.SelectorLinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal">
+
+			<Button
+				android:id="@+id/poi_detail_map_explore"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/global_spacing_16"
+				android:paddingRight="@dimen/global_spacing_16"
+				android:text="@string/poi_detail_map_explore"
+				style="?android:attr/borderlessButtonStyle" />
+
+			<Button
+				android:id="@+id/poi_detail_map_navigate"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:paddingLeft="@dimen/global_spacing_16"
+				android:paddingRight="@dimen/global_spacing_16"
+				android:text="@string/poi_detail_map_navigate"
+				style="?android:attr/borderlessButtonStyle" />
+
+		</LinearLayout>
+	</LinearLayout>
+</androidx.cardview.widget.CardView>

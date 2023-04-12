@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.alfonz.view.StatefulLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/poi_list_stateful_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:animateLayoutChanges="true"
+	app:progressLayout="@layout/placeholder_progress"
+	app:offlineLayout="@layout/placeholder_offline"
+	app:emptyLayout="@layout/placeholder_empty">
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/poi_list_recycler"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:scrollbars="vertical"
+		android:background="@color/global_bg_front" />
+
+</org.alfonz.view.StatefulLayout>

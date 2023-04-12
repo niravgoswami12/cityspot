@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	app:cardBackgroundColor="@color/global_bg_front"
+	app:cardCornerRadius="@dimen/card_corner_radius"
+	app:cardElevation="@dimen/global_elevation_2">
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:paddingTop="@dimen/global_spacing_16"
+			android:paddingStart="@dimen/global_spacing_16"
+			android:paddingEnd="@dimen/global_spacing_16"
+			android:textAppearance="@style/TextAppearance.CitySpot.Headline"
+			android:fontFamily="sans-serif-light"
+			android:text="@string/poi_detail_description_title" />
+
+		<TextView
+			android:id="@+id/poi_detail_description_text"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:padding="@dimen/global_spacing_16"
+			android:textAppearance="@style/TextAppearance.CitySpot.Body1"
+			android:textColor="@color/global_text_secondary" />
+
+	</LinearLayout>
+</androidx.cardview.widget.CardView>

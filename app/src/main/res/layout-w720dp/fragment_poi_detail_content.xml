@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical">
+
+	<include layout="@layout/toolbar_image" />
+
+	<View
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/toolbar_shadow_height"
+		android:background="@drawable/shape_shadow" />
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:baselineAligned="false">
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/poi_detail_card_margin_vertical_first"
+				android:layout_marginBottom="@dimen/poi_detail_card_margin_vertical"
+				android:layout_marginStart="@dimen/poi_detail_card_margin_horizontal_first"
+				android:layout_marginEnd="@dimen/poi_detail_card_margin_horizontal"
+				layout="@layout/fragment_poi_detail_content_info" />
+
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/poi_detail_card_margin_vertical"
+				android:layout_marginBottom="@dimen/poi_detail_card_margin_vertical"
+				android:layout_marginStart="@dimen/poi_detail_card_margin_horizontal_first"
+				android:layout_marginEnd="@dimen/poi_detail_card_margin_horizontal"
+				layout="@layout/fragment_poi_detail_content_banner" />
+
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/poi_detail_card_margin_vertical"
+				android:layout_marginBottom="@dimen/poi_detail_card_margin_vertical_last"
+				android:layout_marginStart="@dimen/poi_detail_card_margin_horizontal_first"
+				android:layout_marginEnd="@dimen/poi_detail_card_margin_horizontal"
+				layout="@layout/fragment_poi_detail_content_description" />
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:orientation="vertical">
+
+			<include
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="@dimen/poi_detail_card_margin_vertical_first"
+				android:layout_marginBottom="@dimen/poi_detail_card_margin_vertical_last"
+				android:layout_marginStart="@dimen/poi_detail_card_margin_horizontal"
+				android:layout_marginEnd="@dimen/poi_detail_card_margin_horizontal_last"
+				layout="@layout/fragment_poi_detail_content_map" />
+
+		</LinearLayout>
+	</LinearLayout>
+
+	<View
+		android:id="@+id/poi_detail_gap"
+		android:layout_width="match_parent"
+		android:layout_height="0dp" />
+
+</LinearLayout>

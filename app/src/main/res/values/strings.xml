@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name" translatable="false">City Spot</string>
+	<string name="navigation_header_title">City Spot</string>
+
+	<string name="global_database_fail_toast">Wooops! Cannot read data from database</string>
+	<string name="global_map_fail_toast">You device does not support map</string>
+
+	<string name="title_poi_detail">Spot detail</string>
+	<string name="title_map">Map</string>
+	<string name="title_search">Search</string>
+
+	<string name="menu_navigation_all">All spots</string>
+	<string name="menu_navigation_favorites">Favorites</string>
+	<string name="menu_poi_list_map">Map</string>
+	<string name="menu_poi_detail_share">Share</string>
+	<string name="menu_map_layers">Layers</string>
+	<string name="menu_map_layers_normal">Normal</string>
+	<string name="menu_map_layers_satellite">Satellite</string>
+	<string name="menu_map_layers_hybrid">Hybrid</string>
+	<string name="menu_map_layers_terrain">Terrain</string>
+	<string name="menu_rate">Rate</string>
+	<string name="menu_about">About</string>
+	<string name="menu_privacy_policy">Privacy policy</string>
+	<string name="menu_search">Search</string>
+	<string name="menu_search_hint">Search spots</string>
+
+	<string name="drawer_open">Open navigation drawer</string>
+	<string name="drawer_close">Close navigation drawer</string>
+
+	<string name="placeholder_empty">No spots found</string>
+	<string name="placeholder_offline">No Internet connection available</string>
+
+	<string name="permission_access_location">Permission to access your location is required</string>
+	<string name="permission_unknown">Permission is required</string>
+
+	<string name="unit_meter">m</string>
+	<string name="unit_kilometer">km</string>
+	<string name="unit_mile">mi</string>
+
+	<string name="dialog_about_title">About</string>
+	<string name="dialog_about_message"><![CDATA[City Spot <br /> <br /> App where you can find places around city.]]></string>
+
+	<string name="poi_list_item_image_description">Spot picture</string>
+
+	<string name="poi_detail_info_title">Info</string>
+	<string name="poi_detail_map_title">Map</string>
+	<string name="poi_detail_map_explore">Explore</string>
+	<string name="poi_detail_map_navigate">Navigate</string>
+	<string name="poi_detail_map_image_description">Map</string>
+	<string name="poi_detail_description_title">Description</string>
+	<string name="poi_detail_share_subject">Spot</string>
+</resources>

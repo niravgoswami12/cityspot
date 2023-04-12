@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<org.alfonz.view.StatefulLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@+id/poi_detail_stateful_layout"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:animateLayoutChanges="true"
+	app:progressLayout="@layout/placeholder_progress"
+	app:offlineLayout="@layout/placeholder_offline"
+	app:emptyLayout="@layout/placeholder_empty">
+
+	<com.ng.cityspot.view.ObservableStickyScrollView
+		android:id="@+id/container_content"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true"
+		android:overScrollMode="never">
+
+		<include layout="@layout/fragment_poi_detail_content" />
+
+	</com.ng.cityspot.view.ObservableStickyScrollView>
+</org.alfonz.view.StatefulLayout>

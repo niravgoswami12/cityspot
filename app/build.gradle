@@ -1,0 +1,53 @@
+// Main build script for City Spot
+
+apply plugin: "com.android.application"
+apply from: "../utils.gradle"
+
+android {
+	compileSdkVersion 32
+	buildToolsVersion "32.0.0"
+
+	defaultConfig {
+		applicationId "com.ng.cityspot"
+		minSdkVersion 21
+		targetSdkVersion 32
+		versionCode 1
+		versionName "1.0"
+		vectorDrawables.useSupportLibrary = true
+	}
+
+	buildTypes {
+		debug {
+			buildConfigField "boolean", "LOGS", "true"
+
+			versionNameSuffix "-debug"
+		}
+	}
+
+	compileOptions {
+		sourceCompatibility JavaVersion.VERSION_11
+		targetCompatibility JavaVersion.VERSION_11
+	}
+
+	setProperty("archivesBaseName", getArtifactName(defaultConfig))
+}
+
+dependencies {
+	implementation files("libs/alfonz-graphics-0.9.4.aar")
+	implementation files("libs/alfonz-utility-0.9.4.aar")
+	implementation files("libs/alfonz-view-0.9.4.aar")
+	implementation "androidx.appcompat:appcompat:1.4.1"
+	implementation "androidx.cardview:cardview:1.0.0"
+	implementation "androidx.fragment:fragment:1.4.1"
+	implementation "androidx.recyclerview:recyclerview:1.2.1"
+	implementation "com.github.bumptech.glide:glide:4.13.0"
+	implementation "com.github.bumptech.glide:okhttp3-integration:4.13.0"
+	annotationProcessor "com.github.bumptech.glide:compiler:4.13.0"
+	implementation "com.google.android.gms:play-services-maps:18.0.2"
+	implementation "com.google.android.material:material:1.5.0"
+	implementation "com.google.android.play:core:1.10.3"
+	implementation "com.google.maps.android:android-maps-utils:2.2.2"
+	implementation "com.j256.ormlite:ormlite-android:6.1"
+	implementation "se.emilsjolander:StickyScrollViewItems:1.1.0"
+}
+

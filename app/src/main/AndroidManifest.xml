@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:installLocation="auto"
+	package="com.ng.cityspot">
+
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" /> <!-- allows the API to access Google web-based services -->
+
+	<!-- maps API needs OpenGL ES 2.0 -->
+	<uses-feature
+		android:glEsVersion="0x00020000"
+		android:required="false" />
+
+	<application
+		android:name="com.ng.cityspot.CitySpotApplication"
+		android:icon="@mipmap/ic_launcher"
+		android:label="@string/app_name"
+		android:theme="@style/Theme.CitySpot.Indigo"
+		android:hardwareAccelerated="true"
+		android:allowBackup="true"
+		android:supportsRtl="true"
+		android:usesCleartextTraffic="true"
+		tools:ignore="UnusedAttribute"
+		tools:replace="android:icon">
+
+
+
+		<activity
+			android:name="com.ng.cityspot.activity.MainActivity"
+			android:theme="@style/Theme.CitySpot.TransparentStatusBar.Indigo"
+			android:launchMode="standard"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="http" />
+				<data android:scheme="https" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name="com.ng.cityspot.activity.SplashActivity"
+			android:theme="@style/Theme.CitySpot.Splash"
+			android:exported="true">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+		</activity>
+
+		<activity
+			android:name="com.ng.cityspot.activity.PoiDetailActivity"
+			android:label="@string/title_poi_detail"
+			android:launchMode="standard" />
+
+		<activity
+			android:name="com.ng.cityspot.activity.MapActivity"
+			android:label="@string/title_map"
+			android:launchMode="standard" />
+
+
+		<meta-data
+			android:name="com.google.android.geo.API_KEY"
+			android:value="@string/google_maps_api_key" />
+
+	</application>
+</manifest>

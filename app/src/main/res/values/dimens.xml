@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<dimen name="global_keyline_16">16dp</dimen>
+	<dimen name="global_keyline_32">32dp</dimen>
+	<dimen name="global_keyline_72">72dp</dimen>
+
+	<dimen name="global_spacing_8">8dp</dimen>
+	<dimen name="global_spacing_16">16dp</dimen>
+	<dimen name="global_spacing_24">24dp</dimen>
+	<dimen name="global_spacing_32">32dp</dimen>
+	<dimen name="global_spacing_48">48dp</dimen>
+	<dimen name="global_spacing_56">56dp</dimen>
+	<dimen name="global_spacing_72">72dp</dimen>
+
+	<dimen name="global_elevation_2">2dp</dimen>
+	<dimen name="global_elevation_4">4dp</dimen>
+	<dimen name="global_elevation_6">6dp</dimen>
+	<dimen name="global_elevation_8">8dp</dimen>
+	<dimen name="global_elevation_12">12dp</dimen>
+	<dimen name="global_elevation_16">16dp</dimen>
+	<dimen name="global_elevation_24">24dp</dimen>
+
+	<dimen name="global_text_size_display_4">112sp</dimen>
+	<dimen name="global_text_size_display_3">56sp</dimen>
+	<dimen name="global_text_size_display_2">45sp</dimen>
+	<dimen name="global_text_size_display_1">34sp</dimen>
+	<dimen name="global_text_size_headline">24sp</dimen>
+	<dimen name="global_text_size_title">20sp</dimen>
+	<dimen name="global_text_size_subhead">16sp</dimen>
+	<dimen name="global_text_size_body_2">14sp</dimen>
+	<dimen name="global_text_size_body_1">14sp</dimen>
+	<dimen name="global_text_size_caption">12sp</dimen>
+	<dimen name="global_text_size_button">14sp</dimen>
+	<dimen name="global_text_size_menu">16sp</dimen>
+	<dimen name="global_text_size_placeholder">20sp</dimen>
+
+	<dimen name="global_height_divider">0.5dp</dimen>
+
+	<dimen name="toolbar_shadow_height">4dp</dimen>
+	<dimen name="toolbar_image_title_margin_left">28dp</dimen>
+	<dimen name="toolbar_image_title_padding_right">44dp</dimen>
+	<dimen name="toolbar_image_gap_height">144dp</dimen>
+	<dimen name="toolbar_image_collapsed_height">112dp</dimen>
+	<dimen name="toolbar_image_expanded_height">256dp</dimen>
+
+	<dimen name="navigation_header_height">112dp</dimen>
+	<dimen name="navigation_icon_size">20dp</dimen>
+
+	<dimen name="fab_mini_size">40dp</dimen>
+
+	<dimen name="card_corner_radius">6dp</dimen>
+
+	<dimen name="placeholder_image_size">192dp</dimen>
+
+	<dimen name="splash_image_size">144dp</dimen>
+
+	<dimen name="poi_list_recycler_item_size">192dp</dimen>
+	<dimen name="poi_list_recycler_item_padding">4dp</dimen>
+	<dimen name="poi_list_recycler_item_panel_height">68dp</dimen>
+	<dimen name="poi_list_recycler_item_icon_padding">4dp</dimen>
+
+	<dimen name="poi_detail_card_margin_horizontal">6dp</dimen>
+	<dimen name="poi_detail_card_margin_horizontal_first">12dp</dimen>
+	<dimen name="poi_detail_card_margin_horizontal_last">12dp</dimen>
+	<dimen name="poi_detail_card_margin_vertical">6dp</dimen>
+	<dimen name="poi_detail_card_margin_vertical_first">10dp</dimen>
+	<dimen name="poi_detail_card_margin_vertical_last">16dp</dimen>
+	<dimen name="poi_detail_info_item_padding">12dp</dimen>
+
+	<dimen name="map_marker_size">42dp</dimen>
+</resources>
