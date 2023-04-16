@@ -65,7 +65,6 @@ public class MapActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// action bar menu behavior
 		if (item.getItemId() == android.R.id.home) {
 			finish();
 			return true;

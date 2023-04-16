@@ -92,7 +92,6 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
 
-		// handle intent extras
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null) {
 			handleExtras(extras);
@@ -112,17 +111,13 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		// setup map
 		setupMap();
 		setupClusterManager();
 
-		// setup stateful layout
 		setupStatefulLayout(savedInstanceState);
 
-		// load data
 		if (mPoiList == null || mPoiList.isEmpty()) loadData();
 
-		// check permissions
 		mPermissionManager.request(
 				this,
 				new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
@@ -138,7 +133,6 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	public void onResume() {
 		super.onResume();
 
-		// map
 		if (mMapView != null) mMapView.onResume();
 	}
 
@@ -146,7 +140,6 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	public void onPause() {
 		super.onPause();
 
-		// map
 		if (mMapView != null) mMapView.onPause();
 	}
 
@@ -165,10 +158,8 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	public void onDestroy() {
 		super.onDestroy();
 
-		// map
 		if (mMapView != null) mMapView.onDestroy();
 
-		// cancel async tasks
 		mDatabaseCallManager.cancelAllTasks();
 	}
 
@@ -181,32 +172,26 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	public void onLowMemory() {
 		super.onLowMemory();
 
-		// map
 		if (mMapView != null) mMapView.onLowMemory();
 	}
 
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
-		// save current instance state
 		super.onSaveInstanceState(outState);
 
-		// stateful layout state
 		if (mStatefulLayout != null) mStatefulLayout.saveInstanceState(outState);
 
-		// map
 		if (mMapView != null) mMapView.onSaveInstanceState(outState);
 	}
 
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		// action bar menu
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_map, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// action bar menu behavior
 		switch (item.getItemId()) {
 			case R.id.menu_map_layers_normal:
 				setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -237,23 +222,20 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	@Override
 	public void onDatabaseCallRespond(final DatabaseCallTask task, final Data<?> data) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			if (task.getQuery().getClass().equals(PoiReadAllQuery.class)) {
 				Logcat.d("PoiReadAllQuery");
 
-				// get data
 				Data<List<PoiModel>> poiReadAllData = (Data<List<PoiModel>>) data;
 				List<PoiModel> poiList = poiReadAllData.getDataObject();
 				mPoiList.clear();
 				mPoiList.addAll(poiList);
 			}
 
-			// hide progress and bind data
 			if (mPoiList != null && !mPoiList.isEmpty()) mStatefulLayout.showContent();
 			else mStatefulLayout.showEmpty();
 
-			// finish query
 			mDatabaseCallManager.finishTask(task);
 		});
 	}
@@ -261,20 +243,17 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	@Override
 	public void onDatabaseCallFail(final DatabaseCallTask task, final Exception exception) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			if (task.getQuery().getClass().equals(PoiReadAllQuery.class)) {
 				Logcat.d("PoiReadAllQuery / exception " + exception.getClass().getSimpleName() + " / " + exception.getMessage());
 			}
 
-			// hide progress
 			if (mPoiList != null && !mPoiList.isEmpty()) mStatefulLayout.showContent();
 			else mStatefulLayout.showEmpty();
 
-			// handle fail
 			handleFail();
 
-			// finish query
 			mDatabaseCallManager.finishTask(task);
 		});
 	}
@@ -301,17 +280,14 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 
 	private void loadData() {
 		if (!mDatabaseCallManager.hasRunningTask(PoiReadAllQuery.class)) {
-			// show progress
 			mStatefulLayout.showProgress();
 
-			// run async task
 			Query query = new PoiReadAllQuery();
 			mDatabaseCallManager.executeTask(query, this);
 		}
 	}
 
 	private void setupView() {
-		// add pois
 		((MapView) mRootView.findViewById(R.id.map_mapview)).getMapAsync(googleMap -> {
 			googleMap.clear();
 			mClusterManager.clearItems();
@@ -336,31 +312,25 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	}
 
 	private void setupStatefulLayout(Bundle savedInstanceState) {
-		// reference
 		mStatefulLayout = (StatefulLayout) mRootView;
 
-		// state change listener
 		mStatefulLayout.setOnStateChangeListener((view, state) -> {
 			Logcat.d(String.valueOf(state));
 
-			// bind data
 			if (state == StatefulLayout.CONTENT) {
 				if (mPoiList != null && !mPoiList.isEmpty()) setupView();
 			}
 		});
 
-		// restore state
 		mStatefulLayout.restoreInstanceState(savedInstanceState);
 	}
 
 	private void setupMap() {
-		// settings
 		((MapView) mRootView.findViewById(R.id.map_mapview)).getMapAsync(googleMap -> {
 			Preferences preferences = new Preferences();
 
 			googleMap.setMapType(preferences.getMapType());
 
-			// check access location permission
 			if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 				googleMap.setMyLocationEnabled(true);
 			}
@@ -393,7 +363,6 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	}
 
 	private void setupClusterManager() {
-		// clustering
 		((MapView) mRootView.findViewById(R.id.map_mapview)).getMapAsync(new OnMapReadyCallback() {
 			@Override
 			public void onMapReady(GoogleMap googleMap) {
@@ -471,12 +440,11 @@ public class MapFragment extends TaskFragment implements DatabaseCallListener {
 	}
 
 	private float getColorAccentHue() {
-		// get accent color
+
 		TypedValue typedValue = new TypedValue();
 		getActivity().getTheme().resolveAttribute(R.attr.colorAccent, typedValue, true);
 		int markerColor = typedValue.data;
 
-		// get hue
 		float[] hsv = new float[3];
 		Color.colorToHSV(markerColor, hsv);
 		return hsv[0];

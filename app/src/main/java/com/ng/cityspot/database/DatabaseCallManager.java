@@ -19,7 +19,6 @@ public class DatabaseCallManager {
 		DatabaseCallTask task = new DatabaseCallTask(query, listener);
 		mTaskList.add(task);
 
-		// use AsyncTask.THREAD_POOL_EXECUTOR or AsyncTask.SERIAL_EXECUTOR
 		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 

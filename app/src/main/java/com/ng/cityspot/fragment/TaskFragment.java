@@ -46,18 +46,15 @@ public class TaskFragment extends Fragment {
 	}
 
 	protected void executeTask(AsyncTask<Void, ?, ?> task) {
-		// use AsyncTask.THREAD_POOL_EXECUTOR or AsyncTask.SERIAL_EXECUTOR
 		task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 
 	private void runNow(Runnable runnable) {
-		//Logcat.d("TaskFragment.runNow(): " + runnable.getClass().getEnclosingMethod());
 		getActivity().runOnUiThread(runnable);
 	}
 
 	private void addPending(Runnable runnable) {
 		synchronized (mLock) {
-			//Logcat.d("TaskFragment.addPending(): " + runnable.getClass().getEnclosingMethod());
 			mPendingCallbacks.add(runnable);
 		}
 	}

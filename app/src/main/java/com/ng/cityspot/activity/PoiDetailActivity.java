@@ -17,7 +17,6 @@ public class PoiDetailActivity extends AppCompatActivity {
 	public static Intent newIntent(Context context, long poiId) {
 		Intent intent = new Intent(context, PoiDetailActivity.class);
 
-		// extras
 		intent.putExtra(EXTRA_POI_ID, poiId);
 
 		return intent;
@@ -57,7 +56,6 @@ public class PoiDetailActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// action bar menu behavior
 		if (item.getItemId() == android.R.id.home) {
 			finish();
 			return true;

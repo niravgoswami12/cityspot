@@ -31,14 +31,13 @@ public class AboutDialogFragment extends DialogFragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		// cancelable on touch outside
 		if (getDialog() != null) getDialog().setCanceledOnTouchOutside(true);
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onDestroyView() {
-		// http://code.google.com/p/android/issues/detail?id=17423
+
 		if (getDialog() != null && getRetainInstance()) getDialog().setDismissMessage(null);
 		super.onDestroyView();
 	}
@@ -53,10 +52,8 @@ public class AboutDialogFragment extends DialogFragment {
 				.setMessage(Html.fromHtml(getResources().getString(R.string.dialog_about_message)))
 				.setPositiveButton(android.R.string.ok, null);
 
-		// create dialog from builder
 		final AppCompatDialog dialog = builder.create();
 
-		// override positive button
 		dialog.setOnShowListener(dialogInterface ->
 				((TextView) dialog.findViewById(android.R.id.message)).setMovementMethod(LinkMovementMethod.getInstance())
 		);

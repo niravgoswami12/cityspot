@@ -37,7 +37,7 @@ public final class LocationUtility {
 				result = String.format(Locale.US, "%d " + CitySpotApplication.getContext().getString(R.string.unit_kilometer), (int) distance / 1000);
 			}
 		} else {
-			double distanceMiles = distance * 0.000621371192; // distance in miles
+			double distanceMiles = distance * 0.000621371192;
 
 			if (distanceMiles < 0.1) {
 				result = String.format(Locale.US, "%.2f " + CitySpotApplication.getContext().getString(R.string.unit_mile), distanceMiles);

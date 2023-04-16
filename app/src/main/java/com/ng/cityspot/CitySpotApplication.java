@@ -20,8 +20,6 @@ public class CitySpotApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
-		// init logcat
 		Logcat.init(CitySpotConfig.LOGS, "CitySpot");
 	}
 }

@@ -44,7 +44,6 @@ public class PoiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 	public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-		// inflate view and create view holder
 		if (viewType == VIEW_TYPE_POI) {
 			View view = inflater.inflate(R.layout.fragment_poi_list_item, parent, false);
 			return new PoiViewHolder(view, mListener);
@@ -55,21 +54,15 @@ public class PoiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 	@Override
 	public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
-		// bind data
 		if (viewHolder instanceof PoiViewHolder) {
-			// entity
 			PoiModel poi = mPoiList.get(getPoiPosition(position));
 
-			// bind data
 			if (poi != null) {
 				((PoiViewHolder) viewHolder).bindData(poi);
 			}
 		}
 
-		// set item margins
 		setItemMargins(viewHolder.itemView, position);
-
-		// set animation
 		setAnimation(viewHolder.itemView, position);
 	}
 
@@ -163,15 +156,12 @@ public class PoiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 			super(itemView);
 			mListener = listener;
 
-			// set listener
 			itemView.setOnClickListener(this);
 
-			// find views
 			mNameTextView = itemView.findViewById(R.id.poi_list_item_name);
 			mDistanceTextView = itemView.findViewById(R.id.poi_list_item_distance);
 			mImageView = itemView.findViewById(R.id.poi_list_item_image);
 
-			// placeholder
 			mImagePlaceholder = ContextCompat.getDrawable(itemView.getContext(), R.drawable.placeholder_photo);
 		}
 
@@ -203,7 +193,6 @@ public class PoiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 		}
 
 		public void bindData(Object object) {
-			// do nothing
 		}
 	}
 }

@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
 		setupActionBar();
 		setupDrawer(savedInstanceState);
 
-		// restore saved state
 		if (savedInstanceState != null) {
 			handleSavedInstanceState(savedInstanceState);
 		}
@@ -88,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
 
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
-		// save current instance state
 		super.onSaveInstanceState(outState);
 
 		if (mTitle != null) {
@@ -102,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
 
 	@Override
 	public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-		// open or close the drawer if home button is pressed
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 			return true;
 		}
@@ -166,23 +163,18 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
 	private void setupDrawer(Bundle savedInstanceState) {
 		mTitle = getTitle();
 
-		// reference
 		mDrawerLayout = findViewById(R.id.main_drawer_layout);
 		mNavigationView = findViewById(R.id.main_drawer_navigation);
 
-		// load category list
 		loadCategoryList();
 
-		// add menu items
 		MenuItem firstItem = setupMenu(mNavigationView.getMenu());
 
-		// navigation listener
 		mNavigationView.setNavigationItemSelectedListener(item -> {
 			selectDrawerItem(item);
 			return true;
 		});
 
-		// drawer toggle
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
 			@Override
 			public void onDrawerClosed(View view) {
@@ -198,24 +190,21 @@ public class MainActivity extends AppCompatActivity implements OnSearchListener 
 		};
 		mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-		// show initial fragment
 		if (savedInstanceState == null) {
 			selectDrawerItem(firstItem);
 		}
 	}
 
 	private MenuItem setupMenu(Menu menu) {
-		// clear menu
 		menu.clear();
 
-		// add menu items
 		int groupId = 0;
 		MenuItem firstItem = null;
 		for (int i = 0; i < mCategoryList.size(); i++) {
 			CategoryModel category = mCategoryList.get(i);
 			MenuItem item = menu.add(groupId, i, i, category.getName());
 			GlideUtility.loadMenuItemIcon(this, item, category.getImage());
-			if (i == 1) groupId = 1; // categories from database in a separate group
+			if (i == 1) groupId = 1;
 			if (firstItem == null) firstItem = item;
 		}
 

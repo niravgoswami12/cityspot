@@ -93,7 +93,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 		setHasOptionsMenu(true);
 		setRetainInstance(true);
 
-		// handle intent extras
 		Bundle extras = getActivity().getIntent().getExtras();
 		if (extras != null) {
 			handleExtras(extras);
@@ -110,19 +109,15 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 
-		// setup stateful layout
 		setupStatefulLayout(savedInstanceState);
 
-		// load data
 		if (mPoi == null) loadData();
 
-		// check permissions
 		mPermissionManager.request(
 				this,
 				new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
 				(requestable, permissionsResult) -> handlePermissionsResult(permissionsResult));
 
-		// init timer task
 		setupTimer();
 	}
 
@@ -135,7 +130,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	public void onResume() {
 		super.onResume();
 
-		// timer
 		startTimer();
 	}
 
@@ -143,10 +137,8 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	public void onPause() {
 		super.onPause();
 
-		// timer
 		stopTimer();
 
-		// stop geolocation
 		if (mGeolocation != null) mGeolocation.stop();
 	}
 
@@ -165,7 +157,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	public void onDestroy() {
 		super.onDestroy();
 
-		// cancel async tasks
 		mDatabaseCallManager.cancelAllTasks();
 	}
 
@@ -176,23 +167,19 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 
 	@Override
 	public void onSaveInstanceState(@NonNull Bundle outState) {
-		// save current instance state
 		super.onSaveInstanceState(outState);
 
-		// stateful layout state
 		if (mStatefulLayout != null) mStatefulLayout.saveInstanceState(outState);
 	}
 
 	@Override
 	public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-		// action bar menu
 		super.onCreateOptionsMenu(menu, inflater);
 		inflater.inflate(R.menu.fragment_poi_detail, menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// action bar menu behavior
 		switch (item.getItemId()) {
 			case R.id.menu_poi_detail_share:
 				if (mPoi != null) {
@@ -219,21 +206,18 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	@Override
 	public void onDatabaseCallRespond(final DatabaseCallTask task, final Data<?> data) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			if (task.getQuery().getClass().equals(PoiReadQuery.class)) {
 				Logcat.d("PoiReadQuery");
 
-				// get data
 				Data<PoiModel> poiReadData = (Data<PoiModel>) data;
 				mPoi = poiReadData.getDataObject();
 			}
 
-			// hide progress and bind data
 			if (mPoi != null) mStatefulLayout.showContent();
 			else mStatefulLayout.showEmpty();
 
-			// finish query
 			mDatabaseCallManager.finishTask(task);
 		});
 	}
@@ -241,20 +225,17 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	@Override
 	public void onDatabaseCallFail(final DatabaseCallTask task, final Exception exception) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			if (task.getQuery().getClass().equals(PoiReadQuery.class)) {
 				Logcat.d("PoiReadQuery / exception " + exception.getClass().getSimpleName() + " / " + exception.getMessage());
 			}
 
-			// hide progress
 			if (mPoi != null) mStatefulLayout.showContent();
 			else mStatefulLayout.showEmpty();
 
-			// handle fail
 			handleFail();
 
-			// finish query
 			mDatabaseCallManager.finishTask(task);
 		});
 	}
@@ -262,7 +243,7 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	@Override
 	public void onGeolocationRespond(Geolocation geolocation, final Location location) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			Logcat.d("onGeolocationRespond() = " + location.getProvider() + " / " + location.getLatitude() + " / " + location.getLongitude() + " / " + new Date(location.getTime()).toString());
 			mLocation = location;
@@ -273,7 +254,7 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	@Override
 	public void onGeolocationFail(Geolocation geolocation) {
 		runTaskCallback(() -> {
-			if (mRootView == null) return; // view was destroyed
+			if (mRootView == null) return;
 
 			Logcat.d("onGeolocationFail()");
 		});
@@ -296,12 +277,9 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void loadData() {
-		// load poi
 		if (!mDatabaseCallManager.hasRunningTask(PoiReadQuery.class)) {
-			// show progress
 			mStatefulLayout.showProgress();
 
-			// run async task
 			Query query = new PoiReadQuery(mPoiId);
 			mDatabaseCallManager.executeTask(query, this);
 		}
@@ -325,7 +303,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void setupToolbarView() {
-		// reference
 		final ObservableStickyScrollView observableStickyScrollView = mRootView.findViewById(R.id.container_content);
 		final FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.fab);
 		final View panelTopView = mRootView.findViewById(R.id.toolbar_image_panel_top);
@@ -333,14 +310,12 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 		final ImageView imageView = mRootView.findViewById(R.id.toolbar_image_imageview);
 		final TextView titleTextView = mRootView.findViewById(R.id.toolbar_image_title);
 
-		// title
 		titleTextView.setText(mPoi.getName());
 
-		// image
+
 		Drawable imagePlaceholder = ContextCompat.getDrawable(getContext(), R.drawable.placeholder_photo);
 		GlideUtility.loadImage(imageView, mPoi.getImage(), null, imagePlaceholder);
 
-		// scroll view
 		observableStickyScrollView.setOnScrollViewListener(new ObservableStickyScrollView.OnScrollViewListener() {
 			private final int THRESHOLD = PoiDetailFragment.this.getResources().getDimensionPixelSize(R.dimen.toolbar_image_gap_height);
 			private final int PADDING_LEFT = PoiDetailFragment.this.getResources().getDimensionPixelSize(R.dimen.toolbar_image_title_padding_right);
@@ -353,7 +328,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 
 			@Override
 			public void onScrollChanged(ObservableStickyScrollView scrollView, int x, int y, int oldx, int oldy) {
-				// floating action button
 				if (y > THRESHOLD) {
 					if (floatingActionButton.getVisibility() == View.GONE) {
 						showFloatingActionButton(true);
@@ -364,30 +338,23 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 					}
 				}
 
-				// do not calculate if header is hidden
 				if (y > THRESHOLD && mPreviousY > THRESHOLD) return;
 
-				// calculate panel alpha
 				int alpha = (int) (y * (255F / (float) THRESHOLD));
 				if (alpha > 255) alpha = 255;
 
-				// set color drawables
 				mTopColorDrawable.setColor(ResourcesUtility.getValueOfAttribute(getActivity(), R.attr.colorPrimary));
 				mTopColorDrawable.setAlpha(alpha);
 				mBottomColorDrawable.setColor(ResourcesUtility.getValueOfAttribute(getActivity(), R.attr.colorPrimary));
 				mBottomColorDrawable.setAlpha(alpha);
 
-				// set panel background
 				panelTopView.setBackground(mTopColorDrawable);
 				panelBottomView.setBackground(mBottomColorDrawable);
 
-				// calculate image translation
 				float translation = y / 2;
 
-				// set image translation
 				imageView.setTranslationY(translation);
 
-				// calculate title padding
 				int paddingLeft = (int) (y * (float) PADDING_LEFT / (float) THRESHOLD);
 				if (paddingLeft > PADDING_LEFT) paddingLeft = PADDING_LEFT;
 
@@ -396,24 +363,18 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 				int paddingBottom = (int) ((THRESHOLD - y) * (float) PADDING_BOTTOM / (float) THRESHOLD);
 				if (paddingBottom < 0) paddingBottom = 0;
 
-				// set title padding
 				titleTextView.setPadding(paddingLeft, 0, paddingRight, paddingBottom);
 
-				// calculate title shadow
 				float radius = ((THRESHOLD - y) * SHADOW_RADIUS / (float) THRESHOLD);
 
-				// set title shadow
 				titleTextView.setShadowLayer(radius, 0F, 0F, ContextCompat.getColor(getActivity(), android.R.color.black));
 
-				// previous y
 				mPreviousY = y;
 			}
 		});
 
-		// invoke scroll event because of orientation change toolbar refresh
 		observableStickyScrollView.post(() -> observableStickyScrollView.scrollTo(0, observableStickyScrollView.getScrollY() - 1));
 
-		// floating action button
 		ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) floatingActionButton.getLayoutParams();
 		params.topMargin = getResources().getDimensionPixelSize(R.dimen.toolbar_image_collapsed_height) - getResources().getDimensionPixelSize(R.dimen.fab_mini_size);
 		floatingActionButton.setLayoutParams(params);
@@ -433,7 +394,7 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void setupInfoView() {
-		// reference
+
 		TextView introTextView = mRootView.findViewById(R.id.poi_detail_info_intro);
 		TextView addressTextView = mRootView.findViewById(R.id.poi_detail_info_address);
 		TextView distanceTextView = mRootView.findViewById(R.id.poi_detail_info_distance);
@@ -441,7 +402,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 		TextView phoneTextView = mRootView.findViewById(R.id.poi_detail_info_phone);
 		TextView emailTextView = mRootView.findViewById(R.id.poi_detail_info_email);
 
-		// intro
 		if (mPoi.getIntro() != null && !mPoi.getIntro().trim().equals("")) {
 			introTextView.setText(mPoi.getIntro());
 			introTextView.setVisibility(View.VISIBLE);
@@ -449,7 +409,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			introTextView.setVisibility(View.GONE);
 		}
 
-		// address
 		if (mPoi.getAddress() != null && !mPoi.getAddress().trim().equals("")) {
 			addressTextView.setText(mPoi.getAddress());
 			addressTextView.setVisibility(View.VISIBLE);
@@ -458,7 +417,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			addressTextView.setVisibility(View.GONE);
 		}
 
-		// distance
 		if (mLocation != null) {
 			LatLng myLocation = new LatLng(mLocation.getLatitude(), mLocation.getLongitude());
 			LatLng poiLocation = new LatLng(mPoi.getLatitude(), mPoi.getLongitude());
@@ -470,7 +428,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			distanceTextView.setVisibility(View.GONE);
 		}
 
-		// link
 		if (mPoi.getLink() != null && !mPoi.getLink().trim().equals("")) {
 			linkTextView.setText(mPoi.getLink());
 			linkTextView.setVisibility(View.VISIBLE);
@@ -479,7 +436,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			linkTextView.setVisibility(View.GONE);
 		}
 
-		// phone
 		if (mPoi.getPhone() != null && !mPoi.getPhone().trim().equals("")) {
 			phoneTextView.setText(mPoi.getPhone());
 			phoneTextView.setVisibility(View.VISIBLE);
@@ -488,7 +444,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			phoneTextView.setVisibility(View.GONE);
 		}
 
-		// email
 		if (mPoi.getEmail() != null && !mPoi.getEmail().trim().equals("")) {
 			emailTextView.setText(mPoi.getEmail());
 			emailTextView.setVisibility(View.VISIBLE);
@@ -499,32 +454,25 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void setupMapView() {
-		// reference
 		final ImageView imageView = mRootView.findViewById(R.id.poi_detail_map_image);
 		final ViewGroup wrapViewGroup = mRootView.findViewById(R.id.poi_detail_map_image_wrap);
 		final Button exploreButton = mRootView.findViewById(R.id.poi_detail_map_explore);
 		final Button navigateButton = mRootView.findViewById(R.id.poi_detail_map_navigate);
 
-		// image
 		String key = getString(R.string.google_maps_api_key);
 		String url = getStaticMapUrl(key, mPoi.getLatitude(), mPoi.getLongitude(), MAP_ZOOM);
 		GlideUtility.loadImage(imageView, url, null, null);
 
-		// wrap
 		wrapViewGroup.setOnClickListener(v -> startMapActivity(mPoi));
 
-		// explore
 		exploreButton.setOnClickListener(v -> startMapActivity(mPoi));
 
-		// navigate
 		navigateButton.setOnClickListener(v -> startNavigateActivity(mPoi.getLatitude(), mPoi.getLongitude()));
 	}
 
 	private void setupDescriptionView() {
-		// reference
 		TextView descriptionTextView = mRootView.findViewById(R.id.poi_detail_description_text);
 
-		// content
 		if (mPoi.getDescription() != null && !mPoi.getDescription().trim().equals("")) {
 			descriptionTextView.setText(Html.fromHtml(mPoi.getDescription()), TextView.BufferType.SPANNABLE);
 			descriptionTextView.setMovementMethod(LinkMovementMethod.getInstance());
@@ -532,28 +480,22 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void setupGapView() {
-		// reference
 		final View gapView = mRootView.findViewById(R.id.poi_detail_gap);
 		final CardView mapCardView = mRootView.findViewById(R.id.poi_detail_map);
 
-		// add gap in scroll view so favorite floating action button can be shown on tablet
 		if (gapView != null) {
 			mapCardView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 				@Override
 				public void onGlobalLayout() {
-					// cardview height
 					int cardHeight = mapCardView.getHeight();
 
-					// toolbar height
 					int toolbarHeight = getResources().getDimensionPixelSize(R.dimen.toolbar_image_collapsed_height);
 
-					// screen height
 					Display display = getActivity().getWindowManager().getDefaultDisplay();
 					Point size = new Point();
 					display.getSize(size);
 					int screenHeight = size.y;
 
-					// calculate gap height
 					int gapHeight = screenHeight - cardHeight - toolbarHeight;
 					if (gapHeight > 0) {
 						ViewGroup.LayoutParams params = gapView.getLayoutParams();
@@ -561,7 +503,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 						gapView.setLayoutParams(params);
 					}
 
-					// remove layout listener
 					mapCardView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 				}
 			});
@@ -569,24 +510,19 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void setupStatefulLayout(Bundle savedInstanceState) {
-		// reference
 		mStatefulLayout = (StatefulLayout) mRootView;
 
-		// state change listener
 		mStatefulLayout.setOnStateChangeListener((view, state) -> {
 			Logcat.d(String.valueOf(state));
 
-			// bind data
 			if (state == StatefulLayout.CONTENT) {
 				if (mPoi != null) setupView();
 			}
 
-			// floating action button
 			if (state != StatefulLayout.CONTENT) {
 				showFloatingActionButton(false);
 			}
 
-			// toolbar background and visibility
 			Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
 
 			if (state == StatefulLayout.CONTENT) {
@@ -602,7 +538,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			}
 		});
 
-		// restore state
 		mStatefulLayout.restoreInstanceState(savedInstanceState);
 	}
 
@@ -613,9 +548,7 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			public void run() {
 				Logcat.d("timer");
 
-				// check access location permission
 				if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-					// start geolocation
 					mGeolocation = null;
 					mGeolocation = new Geolocation((LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE), PoiDetailFragment.this);
 				}
@@ -691,7 +624,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 	}
 
 	private void showAboutDialog() {
-		// create and show the dialog
 		DialogFragment newFragment = AboutDialogFragment.newInstance();
 		newFragment.setTargetFragment(this, 0);
 		newFragment.show(getFragmentManager(), DIALOG_ABOUT);
@@ -710,7 +642,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			intent.putExtra(android.content.Intent.EXTRA_TEXT, text);
 			startActivity(intent);
 		} catch (android.content.ActivityNotFoundException e) {
-			// can't start activity
 		}
 	}
 
@@ -719,7 +650,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
 			startActivity(intent);
 		} catch (android.content.ActivityNotFoundException e) {
-			// can't start activity
 		}
 	}
 
@@ -729,7 +659,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			Intent intent = new Intent(android.content.Intent.ACTION_DIAL, Uri.parse(uri));
 			startActivity(intent);
 		} catch (android.content.ActivityNotFoundException e) {
-			// can't start activity
 		}
 	}
 
@@ -739,7 +668,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			Intent intent = new Intent(android.content.Intent.ACTION_SENDTO, Uri.parse(uri));
 			startActivity(intent);
 		} catch (android.content.ActivityNotFoundException e) {
-			// can't start activity
 		}
 	}
 
@@ -749,7 +677,6 @@ public class PoiDetailFragment extends TaskFragment implements DatabaseCallListe
 			Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(uri));
 			startActivity(intent);
 		} catch (android.content.ActivityNotFoundException e) {
-			// can't start activity
 		}
 	}
 }

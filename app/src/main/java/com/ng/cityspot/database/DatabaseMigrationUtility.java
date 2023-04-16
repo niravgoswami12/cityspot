@@ -30,13 +30,11 @@ public final class DatabaseMigrationUtility {
 	private DatabaseMigrationUtility() {}
 
 	public static boolean copyPrepopulatedDatabase(String name, String path) {
-		// copy database from assets
 		try {
 			// create directories
 			File dir = new File(path).getParentFile();
 			dir.mkdirs();
 
-			// input file name
 			String inputFileName = name;
 			String lang = Locale.getDefault().getLanguage();
 			String translatedFileName = lang + "_" + name;
@@ -46,21 +44,17 @@ public final class DatabaseMigrationUtility {
 			Logcat.d("lang = %s", lang);
 			Logcat.d("inputFileName = %s", inputFileName);
 
-			// output file name
 			Logcat.d("outputFileName = %s", path);
 
-			// create streams
 			InputStream inputStream = CitySpotApplication.getContext().getAssets().open(inputFileName);
 			OutputStream outputStream = new FileOutputStream(path);
 
-			// write input to output
 			byte[] buffer = new byte[1024];
 			int length;
 			while ((length = inputStream.read(buffer)) > 0) {
 				outputStream.write(buffer, 0, length);
 			}
 
-			// close streams
 			outputStream.flush();
 			outputStream.close();
 			inputStream.close();

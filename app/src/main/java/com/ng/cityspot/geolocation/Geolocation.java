@@ -24,7 +24,7 @@ public class Geolocation implements LocationListener {
 	private Timer mTimer;
 
 	public Geolocation(LocationManager locationManager, GeolocationListener listener) {
-		mLocationManager = locationManager; // (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE); 
+		mLocationManager = locationManager;
 		mListener = new WeakReference<>(listener);
 		mTimer = new Timer();
 		init();
@@ -86,16 +86,13 @@ public class Geolocation implements LocationListener {
 
 	@SuppressLint("MissingPermission")
 	private void init() {
-		// get last known location
 		Location lastKnownLocation = getLastKnownLocation(mLocationManager);
 
-		// try to listen last known location
 		if (lastKnownLocation != null) {
 			onLocationChanged(lastKnownLocation);
 		}
 
 		if (mCurrentLocation == null) {
-			// start timer to check timeout
 			TimerTask task = new TimerTask() {
 				public void run() {
 					if (mCurrentLocation == null) {
@@ -108,7 +105,6 @@ public class Geolocation implements LocationListener {
 			};
 			mTimer.schedule(task, LOCATION_TIMEOUT);
 
-			// register location updates
 			try {
 				mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0L, 0.0F, this);
 			} catch (IllegalArgumentException e) {
@@ -122,7 +118,6 @@ public class Geolocation implements LocationListener {
 		}
 	}
 
-	// returns last known freshest location from network or GPS
 	@SuppressLint("MissingPermission")
 	private Location getLastKnownLocation(LocationManager locationManager) {
 		Logcat.d("");

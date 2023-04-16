@@ -44,7 +44,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 		}
 	}
 
-	// singleton
 	public static synchronized DatabaseHelper getInstance() {
 		if (sInstance == null) sInstance = new DatabaseHelper();
 		return sInstance;
@@ -54,9 +53,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 	public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
 		try {
 			Logcat.d("");
-
-			//TableUtils.createTable(connectionSource, CategoryModel.class);
-			//TableUtils.createTable(connectionSource, PoiModel.class);
 
 			if (mMigration) {
 				DatabaseMigrationUtility.restoreFavorites();
